@@ -78,6 +78,7 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-si
 .thumb:hover img{transform:scale(1.03)}
 .thumb .play{position:absolute;inset:auto 10px 10px auto;background:rgba(0,0,0,.72);color:#fff;font-size:12px;font-weight:700;border-radius:999px;padding:4px 10px}
 .minis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:600px){.minis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .mini{display:grid;gap:5px;text-decoration:none;color:var(--fg);min-width:0}
 .mini .thumb{border-radius:8px}
 .mini span{font-size:12.5px;line-height:1.35;overflow-wrap:anywhere}
