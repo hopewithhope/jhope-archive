@@ -130,6 +130,9 @@ const DATA=[{"date": "2013-07-27", "type": "페스티벌", "act": "group", "titl
 const UPDATED="2026-11-19";
 const PRESET_ACT="group".startsWith('/*')?'':"group";
 const TYPES=['음악방송','콘서트','페스티벌','시상식','광고','예능','화보','기타'];
+// 칩 순서(2026-11-19 사용자): 무대 → 앨범·뮤비·챌린지 → 광고·화보·예능 → 위버스 라이브 → 기타. 색은 TYPES 순서대로라 TYPES는 바꾸지 않음
+const ORDER=['콘서트','페스티벌','음악방송','시상식','albums','challenges','광고','화보','예능','weverse','기타'];
+const MEDIA_CHIPS={albums:'앨범·뮤직비디오',challenges:'챌린지',weverse:'위버스 라이브'};
 const $=s=>document.querySelector(s);
 function h(tag,attrs,...kids){const el=document.createElement(tag);for(const [k,v] of Object.entries(attrs||{})){if(v==null||v===false)continue;if(k==='class')el.className=v;else if(k==='text')el.textContent=v;else if(k.startsWith('on'))el.addEventListener(k.slice(2),v);else el.setAttribute(k,v===true?'':v);}for(const c of kids.flat()){if(c==null||c===false)continue;el.append(c.nodeType?c:document.createTextNode(String(c)));}return el;}
 const siteLabel=u=>/youtu\.?be/i.test(u)?'유튜브':/tiktok\.com/i.test(u)?'TikTok':/instagram\.com/i.test(u)?'인스타그램':/(x|twitter)\.com/i.test(u)?'X':'영상 사이트';
@@ -156,7 +159,8 @@ function renderFilters(){const el=$('#filters');el.textContent='';
   const POOL=F.act==='all'?ITEMS:ITEMS.filter(s=>s.act===F.act);
   if(!PRESET_ACT){const ab=(label,val)=>h('button',{type:'button',class:'btn act-tab','aria-pressed':String(F.act===val),onclick:()=>{if(F.act===val)return;F.act=val;F.type='all';F.song='';renderFilters();render();}},label);
     const slot=$('#actSlot');slot.textContent='';slot.append(h('div',{class:'act-tabs',role:'group','aria-label':'활동 구분'},ab('전체','all'),ab('솔로','solo'),ab('BTS 단체','group')));}
-  el.append(chip('전체','all'));TYPES.forEach(t=>{if(POOL.some(s=>s.type===t))el.append(chip(t,t,typeClass(t)));});
+  el.append(chip('전체','all'));
+  ORDER.forEach(t=>{if(MEDIA_CHIPS[t]){if(window.HAS_SOLO_MEDIA&&F.act==='solo')el.append(chip(MEDIA_CHIPS[t],t));}else if(POOL.some(s=>s.type===t))el.append(chip(t,t,typeClass(t)));});
   const songs=[...new Set(POOL.flatMap(s=>s.songs||[]))].sort((a,b)=>a.localeCompare(b,'ko'));
   const sel=h('select',{id:'song',class:'select','aria-label':'곡으로 거르기',onchange:e=>{F.song=e.target.value;render();}},h('option',{value:''},'모든 곡'),songs.map(s=>h('option',{value:s},s)));
   sel.value=F.song;const ss=$('#songSlot');ss.textContent='';ss.append(sel);markSearch();}
