@@ -161,6 +161,8 @@ footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-si
 <details class="media-details"><summary>HOPE ON THE STREET VOL.1 <small>2024 · 6곡</small></summary>
 <h3>수록곡 · j-hope Topic</h3><ol class="media-list"><li><a href="https://www.youtube.com/watch?v=4pPaQ0b-3kc" target="_blank" rel="noopener noreferrer">on the street (solo version)</a></li><li><a href="https://www.youtube.com/watch?v=SeZouxOauPw" target="_blank" rel="noopener noreferrer">i wonder... (with Jung Kook of BTS)</a></li><li><a href="https://www.youtube.com/watch?v=tOaWhRATZqk" target="_blank" rel="noopener noreferrer">lock / unlock (with benny blanco, Nile Rodgers)</a></li><li><a href="https://www.youtube.com/watch?v=MWVGgSE9MZg" target="_blank" rel="noopener noreferrer">i don&#x27;t know (with 허윤진 of LE SSERAFIM)</a></li><li><a href="https://www.youtube.com/watch?v=ttF2qiktKBM" target="_blank" rel="noopener noreferrer">what if… (dance mix with JINBO the SuperFreak)</a></li><li><a href="https://www.youtube.com/watch?v=ZgpRygXB3I8" target="_blank" rel="noopener noreferrer">NEURON (with 개코, 윤미래)</a></li></ol>
 <h3>뮤직비디오</h3><ul class="media-grid"><li><a class="mini" href="https://www.youtube.com/watch?v=z4Rg_VgOlJU" target="_blank" rel="noopener noreferrer"><span class="thumb"><img src="https://i.ytimg.com/vi/z4Rg_VgOlJU/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"></span><span class="media-caption">NEURON · Official Motion Picture</span></a></li></ul>
+<h3>관련 영상</h3>
+<button type="button" class="btn" data-jump-q="HOPE ON THE STREET 다큐" data-jump-type="기타">다큐 시리즈 &#x27;HOPE ON THE STREET&#x27; 카드로 가기 ↓</button>
 <h3>앨범 프리뷰</h3>
 <a class="btn" href="https://weverse.io/bts/media/4-153094891?hl=ko" target="_blank" rel="noopener noreferrer">위버스 · Album Preview – PRELUDE ↗</a>
 <a class="btn" href="https://weverse.io/bts/media/4-153095514?hl=ko" target="_blank" rel="noopener noreferrer">위버스 · Album Preview – INTERLUDE ↗</a>
@@ -243,6 +245,7 @@ const ORDER=['콘서트','페스티벌','음악방송','시상식','albums','cha
 const MEDIA_CHIPS={albums:'앨범·뮤직비디오',challenges:'챌린지',weverse:'위버스 라이브'};
 window.HAS_SOLO_MEDIA=true;
 const $=s=>document.querySelector(s);
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-jump-q]');if(!b)return;F.type=b.dataset.jumpType||'all';F.song='';F.q=b.dataset.jumpQ;$('#q').value=F.q;renderFilters();render();if(typeof markSearch==='function')markSearch();$('#list').scrollIntoView({behavior:'smooth',block:'start'});});
 function h(tag,attrs,...kids){const el=document.createElement(tag);for(const [k,v] of Object.entries(attrs||{})){if(v==null||v===false)continue;if(k==='class')el.className=v;else if(k==='text')el.textContent=v;else if(k.startsWith('on'))el.addEventListener(k.slice(2),v);else el.setAttribute(k,v===true?'':v);}for(const c of kids.flat()){if(c==null||c===false)continue;el.append(c.nodeType?c:document.createTextNode(String(c)));}return el;}
 const siteLabel=u=>/youtu\.?be/i.test(u)?'유튜브':/tiktok\.com/i.test(u)?'TikTok':/instagram\.com/i.test(u)?'인스타그램':/(x|twitter)\.com/i.test(u)?'X':'영상 사이트';
 
