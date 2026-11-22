@@ -212,13 +212,10 @@ function render(){const el=$('#list');el.textContent='';const q=F.q.trim().toLow
 // 무대 신청 게시판 (2026-11-23): 구글 폼 응답 시트(웹 게시 CSV)에서 '공개'에 체크한 줄만 보여 줌
 (function loadRequests(){
   const box=$('#reqList');if(!box)return;
+  const NL=String.fromCharCode(10),CR=String.fromCharCode(13),QT=String.fromCharCode(34);
   const parse=t=>{const rows=[];let row=[],f='',q=false;for(let i=0;i<t.length;i++){const c=t[i];
-    if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++;}else q=false;}else f+=c;}
-    else if(c==='"')q=true;else if(c===','){row.push(f);f='';}else if(c==='
-'||c==='
-'){if(c==='
-'&&t[i+1]==='
-')i++;row.push(f);rows.push(row);row=[];f='';}else f+=c;}
+    if(q){if(c===QT){if(t[i+1]===QT){f+=QT;i++;}else q=false;}else f+=c;}
+    else if(c===QT)q=true;else if(c===','){row.push(f);f='';}else if(c===NL||c===CR){if(c===CR&&t[i+1]===NL)i++;row.push(f);rows.push(row);row=[];f='';}else f+=c;}
     if(f||row.length){row.push(f);rows.push(row);}return rows;};
   fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSMLpgCXkZRePQx4nX7kZPySC2OVQKr6JEINJP3AzyGBq4Y96CH8WLgY2BGbou1wlMR4YvRza8FxewW/pub?gid=2095891058&single=true&output=csv',{cache:'no-store'}).then(r=>{if(!r.ok)throw 0;return r.text();}).then(t=>{
     const rows=parse(t);const head=rows.shift()||[];const col=n=>head.findIndex(x=>x.trim()===n);
